@@ -29,32 +29,11 @@ export default function BoutiqueScreen() {
             alignItems: 'center',
             justifyContent: 'space-between',
           }}>
-          <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.sm }}>
-            <View
-              style={{
-                width: 48,
-                height: 34,
-                borderRadius: radius.sm,
-                backgroundColor: '#FFFFFF',
-                borderWidth: 1,
-                borderColor: colors.border,
-                overflow: 'hidden',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              <Image
-                source={require('../../../assets/images/belli-logo.jpg')}
-                style={{ width: '92%', height: '92%' }}
-                contentFit="contain"
-              />
-            </View>
-            <View>
-              <Text style={[typography.screenTitle, { color: colors.text }]}>Belli</Text>
-              <Text style={[typography.micro, { color: colors.accent }]}>
-                Seasonal Atelier
-              </Text>
-            </View>
-          </View>
+          <Image
+            source={require('../../../assets/images/belli-logo.png')}
+            style={{ width: 150, height: 74 }}
+            contentFit="contain"
+          />
 
           <Link href="/product/manage" asChild>
             <Pressable

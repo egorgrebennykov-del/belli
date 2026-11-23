@@ -4,7 +4,7 @@
     "slug": "belli",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/belli-logo.jpg",
+    "icon": "./assets/images/belli-logo.png",
     "scheme": "belli",
     "userInterfaceStyle": "automatic",
     "ios": {

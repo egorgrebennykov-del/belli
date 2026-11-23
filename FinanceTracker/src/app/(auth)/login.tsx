@@ -25,30 +25,11 @@ export default function LoginScreen() {
           }}
           keyboardShouldPersistTaps="handled">
           <View style={{ alignItems: 'center', gap: spacing.sm }}>
-            <View
-              style={{
-                width: 190,
-                height: 110,
-                borderRadius: radius.xl,
-                borderCurve: 'continuous',
-                backgroundColor: '#FFFFFF',
-                borderWidth: 1,
-                borderColor: colors.border,
-                overflow: 'hidden',
-                alignItems: 'center',
-                justifyContent: 'center',
-                shadowColor: colors.shadow,
-                shadowOffset: { width: 0, height: 8 },
-                shadowOpacity: 0.12,
-                shadowRadius: 18,
-                elevation: 3,
-              }}>
-              <Image
-                source={require('../../../assets/images/belli-logo.jpg')}
-                style={{ width: '92%', height: '92%' }}
-                contentFit="contain"
-              />
-            </View>
+            <Image
+              source={require('../../../assets/images/belli-logo.png')}
+              style={{ width: '92%', maxWidth: 320, height: 185 }}
+              contentFit="contain"
+            />
             <Text style={[typography.micro, { color: colors.accent }]}>
               ✦ CURATED CLOTHING ATELIER ✦
             </Text>
