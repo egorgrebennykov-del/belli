@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "Belli",
+    "slug": "belli",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/belli-logo.jpg",
+    "scheme": "belli",
+    "userInterfaceStyle": "automatic",
+    "ios": {
+      "icon": "./assets/expo.icon",
+      "infoPlist": {
+        "NSCameraUsageDescription": "Belli uses the camera to photograph boutique items and your profile avatar.",
+        "NSPhotoLibraryUsageDescription": "Belli uses your photo library to upload clothing photos and your profile avatar.",
+        "NSFaceIDUsageDescription": "Belli uses Face ID to quickly unlock your boutique session."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#FFF7F9",
+        "foregroundImage": "./assets/images/belli-logo.jpg",
+        "backgroundImage": "./assets/images/android-icon-background.png",
+        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+      },
+      "predictiveBackGestureEnabled": false
+    },
+    "web": {
+      "output": "server",
+      "favicon": "./assets/images/belli-logo.jpg"
+    },
+    "plugins": [
+      "expo-router",
+      "expo-secure-store",
+      [
+        "expo-splash-screen",
+        {
+          "backgroundColor": "#FFF7F9",
+          "image": "./assets/images/belli-logo.jpg",
+          "imageWidth": 180
+        }
+      ]
+    ],
+    "experiments": {
+      "typedRoutes": true,
+      "reactCompiler": true
+    }
+  }
+}
