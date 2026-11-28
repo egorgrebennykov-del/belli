@@ -1,5 +1,6 @@
 import { WAVIE_HOODIES } from '@/data/hoodies';
 import { fetchPrintifyProductById, fetchPrintifyProducts } from '@/services/printify';
+import { hashPassword } from '@/utils/crypto';
 
 const SUBDOMAIN = process.env.EXPO_PUBLIC_NHOST_SUBDOMAIN || 'ylllixqgmpirlkpdujwc';
 const REGION = process.env.EXPO_PUBLIC_NHOST_REGION || 'eu-central-1';
@@ -78,9 +79,11 @@ interface NhostAuthResponse {
 }
 
 export async function nhostSignIn(email: string, password: string): Promise<NhostSession> {
+  const cleanEmail = email.trim().toLowerCase();
+  const encryptedPassword = await hashPassword(cleanEmail, password);
   const data = await authRequest<NhostAuthResponse>('/signin/email-password', {
-    email: email.trim().toLowerCase(),
-    password,
+    email: cleanEmail,
+    password: encryptedPassword,
   });
 
   if (!data.session) {
@@ -104,9 +107,11 @@ export async function nhostSignUp(input: {
   password: string;
   displayName: string;
 }): Promise<{ session: NhostSession | null; verificationRequired: boolean }> {
+  const cleanEmail = input.email.trim().toLowerCase();
+  const encryptedPassword = await hashPassword(cleanEmail, input.password);
   const data = await authRequest<NhostAuthResponse>('/signup/email-password', {
-    email: input.email.trim().toLowerCase(),
-    password: input.password,
+    email: cleanEmail,
+    password: encryptedPassword,
     options: {
       displayName: input.displayName.trim(),
     },
