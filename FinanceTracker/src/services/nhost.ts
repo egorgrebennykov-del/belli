@@ -28,7 +28,7 @@ export interface BoutiqueProduct {
   id: string;
   title: string;
   brand: string;
-  category: 'Dresses' | 'Tops' | 'Bottoms' | 'Accessories' | 'Lingerie';
+  category: 'Dresses' | 'Tops' | 'Bottoms' | 'Accessories';
   price: number;
   rating: number;
   stock: number;
@@ -46,7 +46,6 @@ export const BELLI_CATEGORIES = [
   'Tops',
   'Bottoms',
   'Accessories',
-  'Lingerie',
 ] as const;
 
 async function authRequest<T>(path: string, body: Record<string, unknown>): Promise<T> {

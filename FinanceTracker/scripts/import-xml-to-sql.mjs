@@ -22,9 +22,6 @@ function mapCategory(categoryPath) {
   if (lower.includes('панталони') && lower.includes('дрехи')) return 'Bottoms';
   if (lower.includes('пола')) return 'Bottoms';
   if (lower.includes('чанти') || lower.includes('аксесоари')) return 'Accessories';
-  if (lower.includes('бельо') || lower.includes('сутиени') || lower.includes('бански')) {
-    return 'Lingerie';
-  }
   return null;
 }
 
@@ -62,7 +59,6 @@ async function main() {
     Tops: 0,
     Bottoms: 0,
     Accessories: 0,
-    Lingerie: 0,
   };
   const items = [];
 

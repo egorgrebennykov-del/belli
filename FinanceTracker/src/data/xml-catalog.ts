@@ -3,186 +3,6 @@ import { BoutiqueProduct } from '@/services/nhost';
 export const XML_CATALOG: BoutiqueProduct[] = [
   {
     "id": "xml-1",
-    "title": "Изтласкване нагоре model 231027 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 15.9,
-    "rating": 4.6,
-    "stock": 4,
-    "description": "Подплъзгваща се чаша на бюстие LaGerta е елегантен и женствен модел, създаден с оглед на ефектното подчертаване на деколтето. Push-up конструкцията повдига гърдите, нежно ги събира към центъра и им придава пълнеж, по-закръглен вид. Благодарение на това бюстът изглежда оптически уголемен, а деколтето придобива по-ясна и привлекателна линия. Моделът е особе...",
-    "image": "https://wholesalefashion.bg/pics_source/1135431.jpg",
-    "featured": true
-  },
-  {
-    "id": "xml-2",
-    "title": "Soft model 231043 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 17.9,
-    "rating": 4.7,
-    "stock": 2,
-    "description": "Бюстиеърът soft Torfi е елегантен и женствен модел, който впечатлява със своето фино съчетание на нежни материи с изразителни детайли. Чашките са завършени със светъл, лек тюл и украсени с елегантна щампа в интензивно червен цвят. Контрастната комбинация добавя чувствен и внимание-привличащ характер на бельото. Изключително акцентът е бижутерийната декора...",
-    "image": "https://wholesalefashion.bg/pics_source/1135490.jpg",
-    "featured": true
-  },
-  {
-    "id": "xml-3",
-    "title": "Бикини model 231059 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 5.9,
-    "rating": 4.8,
-    "stock": 13,
-    "description": "Дамски гащи Pure Promise № 12 са класически модел, който комбинира удобството на ежедневното носене със субтелно женствено изпълнение. Изработени от мек памук, те се отличават с добро прилепване към силуета и осигуряват комфорт през целия ден. Вечната черност придава универсален характер на бельото, а ефектната дантелена панделка отпред пречупва класическ...",
-    "image": "https://wholesalefashion.bg/pics_source/1135543.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-4",
-    "title": "Soft model 231077 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 15.9,
-    "rating": 4.9,
-    "stock": 4,
-    "description": "Елегантен сутиен Anuk е женски модел, който комбинира комфорта на меките чашки с ефектното, декоративно завършване. Чашките на банели са украсени с красиви щрихи, които придават деликатен и изтънчен характер на цялостта. Банелите осигуряват правилната подкрепа и помагат за моделиране на бюста, запазвайки при това естествения ефект. Неотделящите се презрам...",
-    "image": "https://wholesalefashion.bg/pics_source/1135608.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-5",
-    "title": "Бикини model 231096 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 7.9,
-    "rating": 5,
-    "stock": 5,
-    "description": "Елегантни дамски бикини Newia тип панти са женски модел, изработен от елегантна, чувствена дантела. Гладкият преден дял е финно декориран с дантелени детайли, докато задният дял е изцяло украсен със ситна дантела, която дава на бельото романтичен и изключителен характер. Предният дял на модела е украсен с очарователна панделка и бижутерски акцент, които п...",
-    "image": "https://wholesalefashion.bg/pics_source/1135662.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-6",
-    "title": "Бикини model 231112 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 4.9,
-    "rating": 4.6,
-    "stock": 25,
-    "description": "Чисто обещание № 21 са памучни фики, които комбинират класическия модел с ефектен дантелен акцент. Украсеният преден дял дава на бельото женствен характер, а гладкият заден дял осигурява комфорт и прави модела подходящ за различни стилове. Мекият памук приятно се подрежда по тялото, осигурявайки удобство през всеки ден. Класическият модел се побира добре ...",
-    "image": "https://wholesalefashion.bg/pics_source/1135715.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-7",
-    "title": "Бикини model 231128 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 8.9,
-    "rating": 4.7,
-    "stock": 2,
-    "description": "Коронковите танга бикини Гизела са изключително женствен модел с чувствен характер. Изцяло изработени от черна дантела в цветен десен, впечатляват с елегантен и ефектен външен вид. И отпред, и отзад са приложени дързки изрези, които добавят оригиналност на бельото и подчертават неговия чувствен характер.",
-    "image": "https://wholesalefashion.bg/pics_source/1135768.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-8",
-    "title": "Бикини model 231202 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 8.9,
-    "rating": 4.8,
-    "stock": 4,
-    "description": "Фиго високи Александрина комбинират женствеността с удобството на всекидневното носене. Моделът е изработен от мека, полутранспарентна мрежа, която се допълва от ефектни дантелени влошки. Повдигнатата талия нежно обгръща силуета, подчертава талията и осигурява удобно прилягане. Задният детайл е украсен със забележителни панделки, които добавят романтичен ...",
-    "image": "https://wholesalefashion.bg/pics_source/1136008.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-9",
-    "title": "Полумек model 231816 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 16.9,
-    "rating": 4.9,
-    "stock": 1,
-    "description": "Бюстие Zoje тип полу-мек привлича вниманието си с елегантен десен и декоративни детайли. Полустегнатите чашки на рибари осигуряват подходящо подплъзване и привлекателно моделират бюста. Техните декоративни завършета се допълват от деликатни ленти, а между чашките има очарователна панделка. Регулируемите презрамки позволяват удобно съответствие на бюстие к...",
-    "image": "https://wholesalefashion.bg/pics_source/1137933.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-10",
-    "title": "T-backs model 231833 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 7.9,
-    "rating": 5,
-    "stock": 1,
-    "description": "Чувствени черни прашки Lisbet привличат вниманието със своя елегантен дизайн и декоративни детайли. Моделът е украсен с елегантни ленти, които дават на бельото модерен вид, а ажурната панделка отзад деликатно подчертава женствеността. Това е предложение за жени, които ценят смелото, оригинално завършване и ефектния вид на бельото.",
-    "image": "https://wholesalefashion.bg/pics_source/1137977.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-11",
-    "title": "Изтласкване нагоре model 231028 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 16.9,
-    "rating": 4.6,
-    "stock": 3,
-    "description": "Бялата push-up бюстие Termena е чувствен и елегантен избор, който идеално подчертава формата на бюста. Чашките на бюстието са украсени с финна дантелена апликация, която му придава уникален вид. Регулируемите презрамки осигуряват идеално прилягане към силуета, а деликатната дантела по ръбовете придава изтънченост и елегантност. Този модел повдига и модели...",
-    "image": "https://wholesalefashion.bg/pics_source/1135434.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-12",
-    "title": "Soft model 231044 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 15.9,
-    "rating": 4.7,
-    "stock": 1,
-    "description": "Бюстиеът soft Torfi е ефектен и женствен модел, който впечатлява със своето финно съчетание на деликатни материи с изразителни детайли. Чашките са завършени със светъл, лек тюл и са украсени с елегантна щампа в интензивно червен цвят. Контрастната комбинация дава на бельото чувствен и привличащ вниманието характер. Изключителният акцент е бижутерийното ук...",
-    "image": "https://wholesalefashion.bg/pics_source/1135494.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-13",
-    "title": "Бикини model 231060 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 5.9,
-    "rating": 4.8,
-    "stock": 5,
-    "description": "Дамски долници Pure Promise № 11 са комбинация от класически силует, ежедневен комфорт и деликатно женствено изпълнение. Моделът е изработен от гладък памук със сертификат OEKO-TEX, благодарение на което бельото е идеално за ежедневно носене. Простият силует е допълнен от деликатна дантелена панделка отпред, която добавя елегантен характер на цялостта. Съ...",
-    "image": "https://wholesalefashion.bg/pics_source/1135547.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-14",
-    "title": "Изтласкване нагоре model 231078 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 16.9,
-    "rating": 4.9,
-    "stock": 6,
-    "description": "Бюстие push-up Anuk е женска модел, която комбинира ефектно подчертаване на бюста с елегантно завършване. Чашките с банели, обогатени с push-up възглавнички, повдигат гърдите и ги леко моделират, придавайки на деколтето пълнеж, чувствена форма. Коронките добавят романтичен характер на бюстие и го правят перфектен не само за ежедневно носене, но и за специ...",
-    "image": "https://wholesalefashion.bg/pics_source/1135612.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-15",
-    "title": "T-backs model 231097 Róża",
-    "brand": "Róża",
-    "category": "Lingerie",
-    "price": 6.9,
-    "rating": 5,
-    "stock": 2,
-    "description": "Стрингите Newia са изключително женствена пропозиция, която впечатлява с романтичния си характер и чувствената си форма. Моделът е изцяло покрит с мека, нежна дантела, която предоставя на бельото елегантен и деликатно съблазнителен вид. Изключителен детайл е ефектното изрязване отзад на модела, което красиво експонира силуета и привлича вниманието. Дантел...",
-    "image": "https://wholesalefashion.bg/pics_source/1135665.jpg",
-    "featured": false
-  },
-  {
-    "id": "xml-16",
     "title": "Еротични аксесоари model 171585 Axami",
     "brand": "Axami",
     "category": "Accessories",
@@ -194,7 +14,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": true
   },
   {
-    "id": "xml-17",
+    "id": "xml-2",
     "title": "Секси пола model 220356 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -206,7 +26,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": true
   },
   {
-    "id": "xml-18",
+    "id": "xml-3",
     "title": "Секси рокля model 203425 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -218,7 +38,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": true
   },
   {
-    "id": "xml-19",
+    "id": "xml-4",
     "title": "Секси рокля model 126517 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -230,7 +50,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-20",
+    "id": "xml-5",
     "title": "Секси рокля model 203426 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -242,7 +62,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-21",
+    "id": "xml-6",
     "title": "Секси пола model 126521 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -254,7 +74,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-22",
+    "id": "xml-7",
     "title": "Секси рокля model 203427 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -266,7 +86,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-23",
+    "id": "xml-8",
     "title": "Секси риза model 137934 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -278,7 +98,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-24",
+    "id": "xml-9",
     "title": "Секси рокля model 203428 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -290,7 +110,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-25",
+    "id": "xml-10",
     "title": "Секси риза model 137937 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -302,7 +122,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-26",
+    "id": "xml-11",
     "title": "Секси рокля model 203429 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -314,7 +134,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-27",
+    "id": "xml-12",
     "title": "Секси рокля model 144085 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -326,7 +146,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-28",
+    "id": "xml-13",
     "title": "Секси рокля model 203430 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -338,7 +158,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-29",
+    "id": "xml-14",
     "title": "Секси рокля model 137940 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -350,7 +170,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-30",
+    "id": "xml-15",
     "title": "Секси рокля model 144086 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -362,7 +182,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-31",
+    "id": "xml-16",
     "title": "Секси пола model 203431 Axami",
     "brand": "Axami",
     "category": "Tops",
@@ -374,7 +194,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-32",
+    "id": "xml-17",
     "title": "Ръкавици model 190450 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -386,7 +206,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": true
   },
   {
-    "id": "xml-33",
+    "id": "xml-18",
     "title": "Еротичен костюм model 231568 Obsessive",
     "brand": "Obsessive",
     "category": "Dresses",
@@ -398,7 +218,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": true
   },
   {
-    "id": "xml-34",
+    "id": "xml-19",
     "title": "Еротичен костюм model 231569 Obsessive",
     "brand": "Obsessive",
     "category": "Dresses",
@@ -410,7 +230,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": true
   },
   {
-    "id": "xml-35",
+    "id": "xml-20",
     "title": "Ръкавици model 174569 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -422,7 +242,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-36",
+    "id": "xml-21",
     "title": "Еротични аксесоари model 191398 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -434,7 +254,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-37",
+    "id": "xml-22",
     "title": "Чорапогащи model 191790 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -446,7 +266,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-38",
+    "id": "xml-23",
     "title": "Еротичен костюм model 175214 Obsessive",
     "brand": "Obsessive",
     "category": "Dresses",
@@ -458,7 +278,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-39",
+    "id": "xml-24",
     "title": "Еротичен костюм model 231573 Obsessive",
     "brand": "Obsessive",
     "category": "Dresses",
@@ -470,7 +290,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-40",
+    "id": "xml-25",
     "title": "Еротичен костюм model 59320 Obsessive",
     "brand": "Obsessive",
     "category": "Dresses",
@@ -482,7 +302,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-41",
+    "id": "xml-26",
     "title": "Ръкавици model 230087 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -494,7 +314,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-42",
+    "id": "xml-27",
     "title": "Чорапи model 185268 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -506,7 +326,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-43",
+    "id": "xml-28",
     "title": "Маска model 140595 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -518,7 +338,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-44",
+    "id": "xml-29",
     "title": "Чорапи model 186793 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -530,7 +350,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-45",
+    "id": "xml-30",
     "title": "Чорапи model 185269 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -542,7 +362,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-46",
+    "id": "xml-31",
     "title": "Еротични аксесоари model 186195 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -554,7 +374,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-47",
+    "id": "xml-32",
     "title": "Чорапи model 190475 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -566,7 +386,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-48",
+    "id": "xml-33",
     "title": "Ръкавици model 185270 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -578,7 +398,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-49",
+    "id": "xml-34",
     "title": "Чорапогащи model 190476 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -590,7 +410,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-50",
+    "id": "xml-35",
     "title": "Пасти model 151581 Obsessive",
     "brand": "Obsessive",
     "category": "Accessories",
@@ -602,7 +422,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-51",
+    "id": "xml-36",
     "title": "Еротичен костюм model 233535 Passion",
     "brand": "Passion",
     "category": "Dresses",
@@ -614,7 +434,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-52",
+    "id": "xml-37",
     "title": "Еротичен костюм model 233536 Passion",
     "brand": "Passion",
     "category": "Dresses",
@@ -626,7 +446,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-53",
+    "id": "xml-38",
     "title": "Дамски панталони model 228007 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -638,7 +458,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": true
   },
   {
-    "id": "xml-54",
+    "id": "xml-39",
     "title": "Дневна рокля model 230457 Nife",
     "brand": "Nife",
     "category": "Dresses",
@@ -650,7 +470,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-55",
+    "id": "xml-40",
     "title": "Дневна рокля model 230990 Nife",
     "brand": "Nife",
     "category": "Dresses",
@@ -662,7 +482,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-56",
+    "id": "xml-41",
     "title": "Дамски панталони model 231663 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -674,7 +494,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": true
   },
   {
-    "id": "xml-57",
+    "id": "xml-42",
     "title": "Дамски панталони model 226423 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -686,7 +506,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-58",
+    "id": "xml-43",
     "title": "Дамски панталони model 171286 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -698,7 +518,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-59",
+    "id": "xml-44",
     "title": "Къси панталони model 228008 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -710,7 +530,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-60",
+    "id": "xml-45",
     "title": "Следвайте model 230458 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -722,7 +542,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-61",
+    "id": "xml-46",
     "title": "Дневна рокля model 230991 Nife",
     "brand": "Nife",
     "category": "Dresses",
@@ -734,7 +554,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-62",
+    "id": "xml-47",
     "title": "Дневна рокля model 231664 Nife",
     "brand": "Nife",
     "category": "Dresses",
@@ -746,7 +566,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-63",
+    "id": "xml-48",
     "title": "Следвайте model 231852 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -758,7 +578,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-64",
+    "id": "xml-49",
     "title": "Дневна рокля model 226424 Nife",
     "brand": "Nife",
     "category": "Dresses",
@@ -770,7 +590,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-65",
+    "id": "xml-50",
     "title": "Коктейлна рокля model 171289 Nife",
     "brand": "Nife",
     "category": "Dresses",
@@ -782,7 +602,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-66",
+    "id": "xml-51",
     "title": "Къси панталони model 228009 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -794,7 +614,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-67",
+    "id": "xml-52",
     "title": "Панталони model 210082 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -806,7 +626,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-68",
+    "id": "xml-53",
     "title": "Дневна рокля model 230992 Nife",
     "brand": "Nife",
     "category": "Dresses",
@@ -818,7 +638,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-69",
+    "id": "xml-54",
     "title": "Дневна рокля model 231665 Nife",
     "brand": "Nife",
     "category": "Dresses",
@@ -830,7 +650,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-70",
+    "id": "xml-55",
     "title": "Пола model 216884 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -842,7 +662,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-71",
+    "id": "xml-56",
     "title": "Панталони model 217594 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -854,7 +674,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-72",
+    "id": "xml-57",
     "title": "Къси панталони model 228010 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -866,7 +686,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-73",
+    "id": "xml-58",
     "title": "Дамски панталони model 219777 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -878,7 +698,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-74",
+    "id": "xml-59",
     "title": "Панталони model 210084 Nife",
     "brand": "Nife",
     "category": "Bottoms",
@@ -890,7 +710,7 @@ export const XML_CATALOG: BoutiqueProduct[] = [
     "featured": false
   },
   {
-    "id": "xml-75",
+    "id": "xml-60",
     "title": "Къса пола model 232496 Nife",
     "brand": "Nife",
     "category": "Bottoms",
