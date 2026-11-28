@@ -1,4 +1,5 @@
 import { WAVIE_HOODIES } from '@/data/hoodies';
+import { fetchPrintifyProducts } from '@/services/printify';
 
 const SUBDOMAIN = process.env.EXPO_PUBLIC_NHOST_SUBDOMAIN || 'ylllixqgmpirlkpdujwc';
 const REGION = process.env.EXPO_PUBLIC_NHOST_REGION || 'eu-central-1';
@@ -217,6 +218,9 @@ export async function fetchNhostProducts(
   category: string = 'All',
   search: string = ''
 ): Promise<BoutiqueProduct[]> {
+  // Include live Printify shop products when running with Expo server API routes
+  const printifyProducts = process.env.EXPO_OS === 'web' ? await fetchPrintifyProducts() : [];
+
   try {
     const where: Record<string, unknown> = {};
     if (category && category !== 'All') {
@@ -239,11 +243,15 @@ export async function fetchNhostProducts(
       { where },
       accessToken
     );
-    if (data.products.length > 0) {
-      return data.products;
+    const combined = [...printifyProducts, ...data.products];
+    if (combined.length > 0) {
+      return combined;
     }
     return filterLocalHoodies(category, search);
   } catch {
+    if (printifyProducts.length > 0) {
+      return [...printifyProducts, ...filterLocalHoodies(category, search)];
+    }
     return filterLocalHoodies(category, search);
   }
 }

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Alert, Pressable, ScrollView, Switch, Text, View } from 'react-native';
+import { useQuery } from '@tanstack/react-query';
 import { Image } from 'expo-image';
 import * as ImagePicker from 'expo-image-picker';
 import { Link } from 'expo-router';
@@ -8,6 +9,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { BelliButton } from '@/components/belli-ui';
 import { useAuth } from '@/context/auth-context';
 import { useBag } from '@/context/bag-context';
+import { fetchPrintifyShopStatus } from '@/services/printify';
 import { radius, spacing, typography, useBelliColors } from '@/theme';
 
 export default function ProfileScreen() {
@@ -23,6 +25,12 @@ export default function ProfileScreen() {
   } = useAuth();
   const { favoriteIds, bagCount } = useBag();
   const [updatingPhoto, setUpdatingPhoto] = useState(false);
+
+  const { data: printifyStatus } = useQuery({
+    queryKey: ['printify-shop-status'],
+    queryFn: fetchPrintifyShopStatus,
+    enabled: process.env.EXPO_OS === 'web',
+  });
 
   if (!isAuthenticated) {
     return (
@@ -68,6 +76,28 @@ export default function ProfileScreen() {
               <BelliButton title="Create Account" variant="secondary" onPress={() => {}} />
             </Link>
           </View>
+
+          {printifyStatus?.connected && printifyStatus.shop ? (
+            <View
+              style={{
+                backgroundColor: colors.surface,
+                borderRadius: radius.lg,
+                borderWidth: 1,
+                borderColor: colors.border,
+                padding: spacing.md,
+                gap: 4,
+              }}>
+              <Text style={[typography.micro, { color: colors.success }]}>
+                ✦ PRINTIFY CONNECTED
+              </Text>
+              <Text style={[typography.cardTitle, { color: colors.text }]}>
+                {printifyStatus.shop.title} (ID: {printifyStatus.shop.id})
+              </Text>
+              <Text style={[typography.caption, { color: colors.textSecondary }]}>
+                Channel: {printifyStatus.shop.sales_channel}
+              </Text>
+            </View>
+          ) : null}
         </ScrollView>
       </SafeAreaView>
     );
