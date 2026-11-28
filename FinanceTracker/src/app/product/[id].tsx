@@ -1,10 +1,14 @@
-import React from 'react';
-import { ScrollView, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Pressable, ScrollView, Text, View } from 'react-native';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
-import { Link, Stack, useLocalSearchParams } from 'expo-router';
+import * as Haptics from 'expo-haptics';
+import { Link, Stack, useLocalSearchParams, useRouter } from 'expo-router';
 
-import { BelliButton } from '@/components/belli-ui';
-import { HARDCODED_PRODUCTS } from '@/data/mock-clothes';
+import { BelliButton, BelliStateView } from '@/components/belli-ui';
+import { useAuth } from '@/context/auth-context';
+import { useBag } from '@/context/bag-context';
+import { deleteNhostProduct, fetchNhostProductById } from '@/services/nhost';
 import { radius, spacing, typography, useBelliColors } from '@/theme';
 
 const SIZES = ['XS', 'S', 'M', 'L', 'XL'] as const;
@@ -12,9 +16,85 @@ const SIZES = ['XS', 'S', 'M', 'L', 'XL'] as const;
 export default function ProductDetailsScreen() {
   const { id } = useLocalSearchParams<{ id: string }>();
   const colors = useBelliColors();
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { accessToken, biometricsEnabled, authenticateWithBiometrics } = useAuth();
+  const { favoriteIds, toggleFavorite, addToBag } = useBag();
 
-  const product =
-    HARDCODED_PRODUCTS.find((item) => item.id === id) ?? HARDCODED_PRODUCTS[0];
+  const [selectedSize, setSelectedSize] = useState<string>('M');
+
+  const {
+    data: product,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ['nhost-product', id],
+    queryFn: () => fetchNhostProductById(accessToken, String(id)),
+    enabled: Boolean(id),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: () => {
+      if (!accessToken) throw new Error('Authentication required');
+      return deleteNhostProduct(accessToken, String(id));
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['nhost-products'] });
+      router.back();
+    },
+    onError: (err) => {
+      Alert.alert('Delete Failed', err instanceof Error ? err.message : 'Please try again.');
+    },
+  });
+
+  const handleDelete = async () => {
+    if (biometricsEnabled) {
+      const ok = await authenticateWithBiometrics();
+      if (!ok) return;
+    }
+
+    Alert.alert('Remove Piece', `Remove "${product?.title}" from Nhost database?`, [
+      { text: 'Cancel', style: 'cancel' },
+      { text: 'Delete', style: 'destructive', onPress: () => deleteMutation.mutate() },
+    ]);
+  };
+
+  if (isLoading) {
+    return (
+      <BelliStateView
+        mode="loading"
+        title="Loading Piece"
+        message="Fetching garment details from Nhost..."
+      />
+    );
+  }
+
+  if (error) {
+    return (
+      <BelliStateView
+        mode="error"
+        title="Piece Unavailable"
+        message={error instanceof Error ? error.message : 'Could not load this garment.'}
+        actionLabel="Retry"
+        onAction={() => refetch()}
+      />
+    );
+  }
+
+  if (!product) {
+    return (
+      <BelliStateView
+        mode="empty"
+        title="Piece Not Found"
+        message="This item may have been deleted from the database."
+        actionLabel="Back to Boutique"
+        onAction={() => router.back()}
+      />
+    );
+  }
+
+  const isFavorite = favoriteIds.includes(product.id);
 
   return (
     <>
@@ -27,6 +107,7 @@ export default function ProductDetailsScreen() {
             source={{ uri: product.image }}
             style={{ width: '100%', aspectRatio: 0.92 }}
             contentFit="cover"
+            transition={250}
           />
         </View>
 
@@ -46,7 +127,13 @@ export default function ProductDetailsScreen() {
                 {product.title}
               </Text>
             </View>
-            <View
+            <Pressable
+              onPress={() => {
+                if (process.env.EXPO_OS === 'ios') {
+                  Haptics.selectionAsync().catch(() => {});
+                }
+                toggleFavorite(product.id);
+              }}
               style={{
                 width: 44,
                 height: 44,
@@ -57,27 +144,33 @@ export default function ProductDetailsScreen() {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={{ fontSize: 20, color: colors.accent }}>♡</Text>
-            </View>
+              <Text style={{ fontSize: 20, color: isFavorite ? colors.accent : colors.textMuted }}>
+                {isFavorite ? '♥' : '♡'}
+              </Text>
+            </Pressable>
           </View>
 
           <View style={{ flexDirection: 'row', alignItems: 'center', gap: spacing.md }}>
             <Text style={[typography.screenTitle, { color: colors.accent }]}>
-              ${product.price.toFixed(2)}
+              ${Number(product.price).toFixed(2)}
             </Text>
             <View
               style={{
                 paddingHorizontal: spacing.sm + 2,
                 paddingVertical: 4,
                 borderRadius: radius.pill,
-                backgroundColor: colors.successTint,
+                backgroundColor: product.stock > 0 ? colors.successTint : colors.dangerTint,
               }}>
-              <Text style={[typography.caption, { color: colors.success, fontWeight: '700' }]}>
-                {product.stock} in stock
+              <Text
+                style={[
+                  typography.caption,
+                  { color: product.stock > 0 ? colors.success : colors.danger, fontWeight: '700' },
+                ]}>
+                {product.stock > 0 ? `${product.stock} in stock` : 'Sold out'}
               </Text>
             </View>
             <Text style={[typography.caption, { color: colors.textSecondary }]}>
-              ★ {product.rating.toFixed(1)}
+              ★ {Number(product.rating).toFixed(1)}
             </Text>
           </View>
 
@@ -86,11 +179,12 @@ export default function ProductDetailsScreen() {
               Select Size
             </Text>
             <View style={{ flexDirection: 'row', gap: spacing.sm }}>
-              {SIZES.map((size, idx) => {
-                const active = idx === 2;
+              {SIZES.map((size) => {
+                const active = selectedSize === size;
                 return (
-                  <View
+                  <Pressable
                     key={size}
+                    onPress={() => setSelectedSize(size)}
                     style={{
                       minWidth: 46,
                       height: 42,
@@ -108,7 +202,7 @@ export default function ProductDetailsScreen() {
                       ]}>
                       {size}
                     </Text>
-                  </View>
+                  </Pressable>
                 );
               })}
             </View>
@@ -118,7 +212,14 @@ export default function ProductDetailsScreen() {
             {product.description}
           </Text>
 
-          <BelliButton title="Add Size M to Bag" onPress={() => {}} />
+          <BelliButton
+            title={`Add Size ${selectedSize} to Bag`}
+            disabled={product.stock <= 0}
+            onPress={() => {
+              addToBag(product, selectedSize);
+              Alert.alert('Added to Bag ✦', `${product.title} (${selectedSize}) is in your bag.`);
+            }}
+          />
 
           <View style={{ flexDirection: 'row', gap: spacing.sm }}>
             <Link
@@ -137,7 +238,8 @@ export default function ProductDetailsScreen() {
             <BelliButton
               title="Delete"
               variant="danger"
-              onPress={() => {}}
+              loading={deleteMutation.isPending}
+              onPress={handleDelete}
               style={{ flex: 1 }}
             />
           </View>

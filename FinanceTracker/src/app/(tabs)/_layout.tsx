@@ -2,11 +2,12 @@ import React from 'react';
 import { Text } from 'react-native';
 import { Tabs } from 'expo-router';
 
-import { HARDCODED_BAG } from '@/data/mock-clothes';
+import { useBag } from '@/context/bag-context';
 import { useBelliColors } from '@/theme';
 
 export default function TabsLayout() {
   const colors = useBelliColors();
+  const { bagCount } = useBag();
 
   return (
     <Tabs
@@ -30,7 +31,7 @@ export default function TabsLayout() {
         name="bag"
         options={{
           title: 'Bag',
-          tabBarBadge: HARDCODED_BAG.length,
+          tabBarBadge: bagCount > 0 ? bagCount : undefined,
           tabBarBadgeStyle: { backgroundColor: colors.accent, color: colors.onAccent },
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>🛍</Text>,
         }}

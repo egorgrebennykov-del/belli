@@ -1,12 +1,21 @@
 import React from 'react';
 import { Pressable, Text, View } from 'react-native';
 import { Image } from 'expo-image';
+import * as Haptics from 'expo-haptics';
 import { Link } from 'expo-router';
 
-import { HardcodedProduct } from '@/data/mock-clothes';
+import { BoutiqueProduct } from '@/services/nhost';
 import { radius, spacing, typography, useBelliColors } from '@/theme';
 
-export function ProductCard({ product }: { product: HardcodedProduct }) {
+export function ProductCard({
+  product,
+  isFavorite,
+  onToggleFavorite,
+}: {
+  product: BoutiqueProduct;
+  isFavorite: boolean;
+  onToggleFavorite: (id: string) => void;
+}) {
   const colors = useBelliColors();
 
   return (
@@ -37,14 +46,23 @@ export function ProductCard({ product }: { product: HardcodedProduct }) {
             source={{ uri: product.image }}
             style={{ width: '100%', aspectRatio: 0.85 }}
             contentFit="cover"
+            transition={200}
           />
-          <View
+          <Pressable
+            onPress={(e) => {
+              e.stopPropagation();
+              if (process.env.EXPO_OS === 'ios') {
+                Haptics.selectionAsync().catch(() => {});
+              }
+              onToggleFavorite(product.id);
+            }}
+            hitSlop={10}
             style={{
               position: 'absolute',
               top: spacing.sm,
               right: spacing.sm,
-              width: 32,
-              height: 32,
+              width: 34,
+              height: 34,
               borderRadius: radius.pill,
               backgroundColor: colors.surface,
               borderWidth: 1,
@@ -52,8 +70,10 @@ export function ProductCard({ product }: { product: HardcodedProduct }) {
               alignItems: 'center',
               justifyContent: 'center',
             }}>
-            <Text style={{ fontSize: 15, color: colors.accent }}>♡</Text>
-          </View>
+            <Text style={{ fontSize: 16, color: isFavorite ? colors.accent : colors.textMuted }}>
+              {isFavorite ? '♥' : '♡'}
+            </Text>
+          </Pressable>
           {product.featured ? (
             <View
               style={{
@@ -87,10 +107,10 @@ export function ProductCard({ product }: { product: HardcodedProduct }) {
               marginTop: 2,
             }}>
             <Text style={[typography.price, { color: colors.accent }]}>
-              ${product.price.toFixed(2)}
+              ${Number(product.price).toFixed(2)}
             </Text>
             <Text style={[typography.caption, { color: colors.textSecondary }]}>
-              ★ {product.rating.toFixed(1)}
+              ★ {Number(product.rating).toFixed(1)}
             </Text>
           </View>
         </View>

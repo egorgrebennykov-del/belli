@@ -1,22 +1,137 @@
-import React from 'react';
-import { KeyboardAvoidingView, ScrollView, Switch, Text, View } from 'react-native';
+import React, { useState } from 'react';
+import {
+  Alert,
+  KeyboardAvoidingView,
+  Pressable,
+  ScrollView,
+  Switch,
+  Text,
+  View,
+} from 'react-native';
 import Slider from '@react-native-community/slider';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Image } from 'expo-image';
+import * as ImagePicker from 'expo-image-picker';
+import { useRouter } from 'expo-router';
 
 import { BelliButton, BelliInput } from '@/components/belli-ui';
-import { BELLI_CATEGORIES, HARDCODED_PRODUCTS, HardcodedProduct } from '@/data/mock-clothes';
+import { useAuth } from '@/context/auth-context';
+import {
+  BELLI_CATEGORIES,
+  BoutiqueProduct,
+  createNhostProduct,
+  updateNhostProduct,
+} from '@/services/nhost';
 import { radius, spacing, typography, useBelliColors } from '@/theme';
+import { validateProductForm } from '@/utils/validation';
+
+type EditableCategory = Exclude<(typeof BELLI_CATEGORIES)[number], 'All'>;
+
+const DEFAULT_IMAGE =
+  'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80';
 
 export function ProductForm({
   mode,
   initialProduct,
 }: {
   mode: 'create' | 'edit';
-  initialProduct?: HardcodedProduct;
+  initialProduct?: BoutiqueProduct;
 }) {
   const colors = useBelliColors();
-  const sample = initialProduct ?? HARDCODED_PRODUCTS[0];
-  const categories = BELLI_CATEGORIES.filter((c) => c !== 'All');
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const { accessToken } = useAuth();
+
+  const [title, setTitle] = useState(initialProduct?.title ?? '');
+  const [brand, setBrand] = useState(initialProduct?.brand ?? 'Belli Atelier');
+  const [price, setPrice] = useState(
+    initialProduct?.price !== undefined ? String(initialProduct.price) : '145'
+  );
+  const [stock, setStock] = useState(
+    initialProduct?.stock !== undefined ? String(initialProduct.stock) : '10'
+  );
+  const [description, setDescription] = useState(initialProduct?.description ?? '');
+  const [category, setCategory] = useState<EditableCategory>(
+    initialProduct?.category ?? 'Dresses'
+  );
+  const [featured, setFeatured] = useState(initialProduct?.featured ?? true);
+  const [imageUri, setImageUri] = useState(initialProduct?.image ?? DEFAULT_IMAGE);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [serverError, setServerError] = useState<string | null>(null);
+
+  const mutation = useMutation({
+    mutationFn: async () => {
+      if (!accessToken) {
+        throw new Error('You must be signed in to save changes.');
+      }
+
+      const payload = {
+        title: title.trim(),
+        brand: brand.trim(),
+        price: Number(price),
+        stock: Number(stock),
+        description: description.trim(),
+        category,
+        image: imageUri,
+        featured,
+      };
+
+      if (mode === 'create') {
+        return createNhostProduct(accessToken, payload);
+      }
+      return updateNhostProduct(accessToken, initialProduct!.id, payload);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['nhost-products'] });
+      if (initialProduct) {
+        queryClient.invalidateQueries({ queryKey: ['nhost-product', initialProduct.id] });
+      }
+      router.back();
+    },
+    onError: (err) => {
+      setServerError(err instanceof Error ? err.message : 'Unable to save piece to Nhost.');
+    },
+  });
+
+  const handlePickPhoto = async (useCamera: boolean) => {
+    const permission = useCamera
+      ? await ImagePicker.requestCameraPermissionsAsync()
+      : await ImagePicker.requestMediaLibraryPermissionsAsync();
+
+    if (!permission.granted) {
+      Alert.alert(
+        'Permission Required',
+        `Please allow ${useCamera ? 'camera' : 'photo library'} access to attach a garment photo.`
+      );
+      return;
+    }
+
+    const result = useCamera
+      ? await ImagePicker.launchCameraAsync({ allowsEditing: true, aspect: [4, 5], quality: 0.75 })
+      : await ImagePicker.launchImageLibraryAsync({
+          mediaTypes: ['images'],
+          allowsEditing: true,
+          aspect: [4, 5],
+          quality: 0.75,
+        });
+
+    if (!result.canceled && result.assets[0]?.uri) {
+      setImageUri(result.assets[0].uri);
+    }
+  };
+
+  const handleSubmit = () => {
+    if (mutation.isPending) return;
+    setServerError(null);
+    const result = validateProductForm({ title, brand, price, stock, description });
+    setErrors(result.errors);
+    if (!result.isValid) return;
+    mutation.mutate();
+  };
+
+  const editableCategories = BELLI_CATEGORIES.filter(
+    (c): c is EditableCategory => c !== 'All'
+  );
 
   return (
     <KeyboardAvoidingView
@@ -25,6 +140,19 @@ export function ProductForm({
       <ScrollView
         contentContainerStyle={{ padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xxl }}
         keyboardShouldPersistTaps="handled">
+        {serverError ? (
+          <View
+            style={{
+              backgroundColor: colors.dangerTint,
+              borderRadius: radius.md,
+              padding: spacing.md,
+              borderWidth: 1,
+              borderColor: colors.danger,
+            }}>
+            <Text style={[typography.caption, { color: colors.danger }]}>{serverError}</Text>
+          </View>
+        ) : null}
+
         <View
           style={{
             flexDirection: 'row',
@@ -37,7 +165,7 @@ export function ProductForm({
             borderColor: colors.border,
           }}>
           <Image
-            source={{ uri: sample.image }}
+            source={{ uri: imageUri }}
             style={{
               width: 84,
               height: 100,
@@ -49,10 +177,11 @@ export function ProductForm({
           <View style={{ flex: 1, gap: spacing.xs }}>
             <Text style={[typography.cardTitle, { color: colors.text }]}>Garment Photo</Text>
             <Text style={[typography.caption, { color: colors.textSecondary }]}>
-              Static preview image
+              Capture with camera or select from library
             </Text>
             <View style={{ flexDirection: 'row', gap: spacing.sm, marginTop: 4 }}>
-              <View
+              <Pressable
+                onPress={() => handlePickPhoto(true)}
                 style={{
                   paddingHorizontal: spacing.sm + 4,
                   paddingVertical: spacing.xs + 2,
@@ -62,8 +191,9 @@ export function ProductForm({
                 <Text style={[typography.caption, { color: colors.accent, fontWeight: '700' }]}>
                   Camera
                 </Text>
-              </View>
-              <View
+              </Pressable>
+              <Pressable
+                onPress={() => handlePickPhoto(false)}
                 style={{
                   paddingHorizontal: spacing.sm + 4,
                   paddingVertical: spacing.xs + 2,
@@ -73,21 +203,25 @@ export function ProductForm({
                 <Text style={[typography.caption, { color: colors.text, fontWeight: '600' }]}>
                   Gallery
                 </Text>
-              </View>
+              </Pressable>
             </View>
           </View>
         </View>
 
         <BelliInput
           label="Piece Title"
-          placeholder="Rose Silk Slip Dress"
-          defaultValue={initialProduct?.title ?? ''}
+          placeholder="e.g. Rose Silk Slip Dress"
+          value={title}
+          onChangeText={setTitle}
+          error={errors.title}
         />
 
         <BelliInput
           label="Atelier / Brand"
-          placeholder="Belli Atelier"
-          defaultValue={initialProduct?.brand ?? 'Belli Atelier'}
+          placeholder="e.g. Belli Atelier"
+          value={brand}
+          onChangeText={setBrand}
+          error={errors.brand}
         />
 
         <View style={{ gap: spacing.xs }}>
@@ -98,11 +232,12 @@ export function ProductForm({
             horizontal
             showsHorizontalScrollIndicator={false}
             contentContainerStyle={{ gap: spacing.xs }}>
-            {categories.map((cat, idx) => {
-              const selected = initialProduct ? initialProduct.category === cat : idx === 0;
+            {editableCategories.map((cat) => {
+              const selected = category === cat;
               return (
-                <View
+                <Pressable
                   key={cat}
+                  onPress={() => setCategory(cat)}
                   style={{
                     paddingHorizontal: spacing.md,
                     paddingVertical: spacing.xs + 3,
@@ -121,7 +256,7 @@ export function ProductForm({
                     ]}>
                     {cat}
                   </Text>
-                </View>
+                </Pressable>
               );
             })}
           </ScrollView>
@@ -131,15 +266,21 @@ export function ProductForm({
           <View style={{ flex: 1 }}>
             <BelliInput
               label="Price (USD)"
-              placeholder="185"
-              defaultValue={initialProduct ? String(initialProduct.price) : '185'}
+              placeholder="145"
+              keyboardType="decimal-pad"
+              value={price}
+              onChangeText={setPrice}
+              error={errors.price}
             />
           </View>
           <View style={{ flex: 1 }}>
             <BelliInput
               label="Stock Units"
-              placeholder="8"
-              defaultValue={initialProduct ? String(initialProduct.stock) : '8'}
+              placeholder="10"
+              keyboardType="number-pad"
+              value={stock}
+              onChangeText={setStock}
+              error={errors.stock}
             />
           </View>
         </View>
@@ -158,13 +299,15 @@ export function ProductForm({
               Quick Price Slider
             </Text>
             <Text style={[typography.caption, { color: colors.accent, fontWeight: '700' }]}>
-              ${sample.price}
+              ${Number(price) || 0}
             </Text>
           </View>
           <Slider
             minimumValue={15}
             maximumValue={500}
-            value={sample.price}
+            step={5}
+            value={Math.min(500, Math.max(15, Number(price) || 145))}
+            onValueChange={(val) => setPrice(String(Math.round(val)))}
             minimumTrackTintColor={colors.accent}
             maximumTrackTintColor={colors.border}
             thumbTintColor={colors.accent}
@@ -176,8 +319,10 @@ export function ProductForm({
           placeholder="Describe fabric, silhouette, and styling notes..."
           multiline
           numberOfLines={4}
-          defaultValue={initialProduct?.description ?? ''}
           style={{ minHeight: 96, textAlignVertical: 'top' }}
+          value={description}
+          onChangeText={setDescription}
+          error={errors.description}
         />
 
         <View
@@ -200,16 +345,17 @@ export function ProductForm({
             </Text>
           </View>
           <Switch
-            value={true}
-            onValueChange={() => {}}
+            value={featured}
+            onValueChange={setFeatured}
             trackColor={{ false: colors.border, true: colors.accentSoft }}
-            thumbColor={colors.accent}
+            thumbColor={featured ? colors.accent : colors.surface}
           />
         </View>
 
         <BelliButton
-          title={mode === 'create' ? 'Publish to Boutique' : 'Save Changes'}
-          onPress={() => {}}
+          title={mode === 'create' ? 'Publish to Nhost' : 'Save Changes'}
+          onPress={handleSubmit}
+          loading={mutation.isPending}
         />
       </ScrollView>
     </KeyboardAvoidingView>

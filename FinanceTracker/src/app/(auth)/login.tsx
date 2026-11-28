@@ -1,15 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { KeyboardAvoidingView, Pressable, ScrollView, Text, View } from 'react-native';
 import { Image } from 'expo-image';
-import { Link, useRouter, type Href } from 'expo-router';
+import { Link } from 'expo-router';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { BelliButton, BelliInput } from '@/components/belli-ui';
+import { useAuth } from '@/context/auth-context';
 import { radius, spacing, typography, useBelliColors } from '@/theme';
+import { validateLoginForm } from '@/utils/validation';
 
 export default function LoginScreen() {
   const colors = useBelliColors();
-  const router = useRouter();
+  const { login } = useAuth();
+
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [fieldErrors, setFieldErrors] = useState<{ email?: string; password?: string }>({});
+  const [serverError, setServerError] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleLogin = async () => {
+    setServerError(null);
+    const result = validateLoginForm({ email, password });
+    setFieldErrors(result.errors);
+    if (!result.isValid) return;
+
+    setSubmitting(true);
+    try {
+      await login(email, password);
+    } catch (err) {
+      setServerError(
+        err instanceof Error ? err.message : 'Unable to sign in. Please check your credentials.'
+      );
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }}>
@@ -34,7 +60,7 @@ export default function LoginScreen() {
               ✦ CURATED CLOTHING ATELIER ✦
             </Text>
             <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
-              Sign in to explore the seasonal collection and boutique pieces.
+              Sign in with your Nhost account to browse and manage Belli pieces.
             </Text>
           </View>
 
@@ -55,22 +81,46 @@ export default function LoginScreen() {
             }}>
             <Text style={[typography.screenTitle, { color: colors.text }]}>Welcome back</Text>
 
+            {serverError ? (
+              <View
+                style={{
+                  backgroundColor: colors.dangerTint,
+                  borderRadius: radius.md,
+                  padding: spacing.sm + 4,
+                  borderWidth: 1,
+                  borderColor: colors.danger,
+                }}>
+                <Text style={[typography.caption, { color: colors.danger }]}>{serverError}</Text>
+              </View>
+            ) : null}
+
             <BelliInput
-              label="Email or Username"
-              placeholder="sofia@belli.style"
-              defaultValue="sofia@belli.style"
-            />
-            <BelliInput
-              label="Password"
-              placeholder="••••••••"
-              secureTextEntry
-              defaultValue="Belli2026"
+              label="Email Address"
+              placeholder="name@belli.style"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+              value={email}
+              onChangeText={(text) => {
+                setEmail(text);
+                if (fieldErrors.email) setFieldErrors((p) => ({ ...p, email: undefined }));
+              }}
+              error={fieldErrors.email}
             />
 
-            <BelliButton
-              title="Sign In to Belli"
-              onPress={() => router.replace('/' as Href)}
+            <BelliInput
+              label="Password (min 9 chars)"
+              placeholder="Enter your password"
+              secureTextEntry
+              value={password}
+              onChangeText={(text) => {
+                setPassword(text);
+                if (fieldErrors.password) setFieldErrors((p) => ({ ...p, password: undefined }));
+              }}
+              error={fieldErrors.password}
             />
+
+            <BelliButton title="Sign In to Belli" onPress={handleLogin} loading={submitting} />
           </View>
 
           <View style={{ flexDirection: 'row', justifyContent: 'center', gap: spacing.xs }}>
