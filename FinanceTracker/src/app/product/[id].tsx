@@ -18,7 +18,7 @@ export default function ProductDetailsScreen() {
   const colors = useBelliColors();
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { accessToken, biometricsEnabled, authenticateWithBiometrics } = useAuth();
+  const { accessToken, isAuthenticated, biometricsEnabled, authenticateWithBiometrics } = useAuth();
   const { favoriteIds, toggleFavorite, addToBag } = useBag();
 
   const [selectedSize, setSelectedSize] = useState<string>('M');
@@ -221,28 +221,30 @@ export default function ProductDetailsScreen() {
             }}
           />
 
-          <View style={{ flexDirection: 'row', gap: spacing.sm }}>
-            <Link
-              href={{
-                pathname: '/product/edit/[id]',
-                params: { id: product.id },
-              }}
-              asChild>
+          {isAuthenticated ? (
+            <View style={{ flexDirection: 'row', gap: spacing.sm }}>
+              <Link
+                href={{
+                  pathname: '/product/edit/[id]',
+                  params: { id: product.id },
+                }}
+                asChild>
+                <BelliButton
+                  title="Edit Piece"
+                  variant="secondary"
+                  onPress={() => {}}
+                  style={{ flex: 1 }}
+                />
+              </Link>
               <BelliButton
-                title="Edit Piece"
-                variant="secondary"
-                onPress={() => {}}
+                title="Delete"
+                variant="danger"
+                loading={deleteMutation.isPending}
+                onPress={handleDelete}
                 style={{ flex: 1 }}
               />
-            </Link>
-            <BelliButton
-              title="Delete"
-              variant="danger"
-              loading={deleteMutation.isPending}
-              onPress={handleDelete}
-              style={{ flex: 1 }}
-            />
-          </View>
+            </View>
+          ) : null}
         </View>
       </ScrollView>
     </>

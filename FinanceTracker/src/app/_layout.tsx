@@ -46,16 +46,18 @@ function RootNavigator() {
           headerShadowVisible: false,
           contentStyle: { backgroundColor: colors.background },
         }}>
-        <Stack.Protected guard={!isAuthenticated}>
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-        </Stack.Protected>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="product/[id]"
+          options={{ title: 'Piece Details', headerBackTitle: 'Boutique' }}
+        />
+        <Stack.Screen
+          name="collection/[slug]"
+          options={{ title: 'Collection' }}
+        />
+        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
 
         <Stack.Protected guard={isAuthenticated}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="product/[id]"
-            options={{ title: 'Piece Details', headerBackTitle: 'Boutique' }}
-          />
           <Stack.Screen
             name="product/manage"
             options={{ title: 'New Piece', presentation: 'modal' }}
@@ -63,10 +65,6 @@ function RootNavigator() {
           <Stack.Screen
             name="product/edit/[id]"
             options={{ title: 'Edit Piece', presentation: 'modal' }}
-          />
-          <Stack.Screen
-            name="collection/[slug]"
-            options={{ title: 'Collection' }}
           />
         </Stack.Protected>
       </Stack>

@@ -22,7 +22,7 @@ import { radius, spacing, typography, useBelliColors } from '@/theme';
 
 export default function BoutiqueScreen() {
   const colors = useBelliColors();
-  const { accessToken } = useAuth();
+  const { accessToken, isAuthenticated } = useAuth();
   const { favoriteIds, toggleFavorite } = useBag();
 
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
@@ -63,7 +63,7 @@ export default function BoutiqueScreen() {
             contentFit="contain"
           />
 
-          <Link href="/product/manage" asChild>
+          <Link href={isAuthenticated ? '/product/manage' : '/(auth)/login'} asChild>
             <Pressable
               style={({ pressed }) => ({
                 backgroundColor: colors.accent,
@@ -73,7 +73,7 @@ export default function BoutiqueScreen() {
                 opacity: pressed ? 0.85 : 1,
               })}>
               <Text style={[typography.caption, { color: colors.onAccent, fontWeight: '700' }]}>
-                + Add Piece
+                {isAuthenticated ? '+ Add Piece' : 'Sign In'}
               </Text>
             </Pressable>
           </Link>

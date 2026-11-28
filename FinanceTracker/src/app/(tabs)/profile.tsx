@@ -14,6 +14,7 @@ export default function ProfileScreen() {
   const colors = useBelliColors();
   const {
     user,
+    isAuthenticated,
     logout,
     updateAvatar,
     biometricsEnabled,
@@ -22,6 +23,55 @@ export default function ProfileScreen() {
   } = useAuth();
   const { favoriteIds, bagCount } = useBag();
   const [updatingPhoto, setUpdatingPhoto] = useState(false);
+
+  if (!isAuthenticated) {
+    return (
+      <SafeAreaView style={{ flex: 1, backgroundColor: colors.background }} edges={['top']}>
+        <ScrollView
+          contentContainerStyle={{
+            flexGrow: 1,
+            justifyContent: 'center',
+            padding: spacing.lg,
+            gap: spacing.lg,
+          }}>
+          <View style={{ alignItems: 'center', gap: spacing.sm }}>
+            <View
+              style={{
+                width: 96,
+                height: 96,
+                borderRadius: radius.pill,
+                backgroundColor: colors.accentTint,
+                borderWidth: 2,
+                borderColor: colors.accent,
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}>
+              <Text style={[typography.brandTitle, { color: colors.accent }]}>B</Text>
+            </View>
+            <Text style={[typography.screenTitle, { color: colors.text }]}>
+              Belli Atelier
+            </Text>
+            <Text
+              style={[
+                typography.body,
+                { color: colors.textSecondary, textAlign: 'center', maxWidth: 290 },
+              ]}>
+              Sign in to publish new pieces, edit catalog items, and sync your profile.
+            </Text>
+          </View>
+
+          <View style={{ gap: spacing.sm }}>
+            <Link href="/(auth)/login" asChild>
+              <BelliButton title="Sign In" onPress={() => {}} />
+            </Link>
+            <Link href="/(auth)/register" asChild>
+              <BelliButton title="Create Account" variant="secondary" onPress={() => {}} />
+            </Link>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
+    );
+  }
 
   const pickProfileImage = async (useCamera: boolean) => {
     setUpdatingPhoto(true);
