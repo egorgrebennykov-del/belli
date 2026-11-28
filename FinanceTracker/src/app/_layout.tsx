@@ -19,7 +19,10 @@ export const unstable_settings = {
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 2,
+      staleTime: 0,
+      gcTime: 0,
+      refetchOnMount: 'always',
+      refetchOnWindowFocus: true,
       retry: 1,
     },
   },
