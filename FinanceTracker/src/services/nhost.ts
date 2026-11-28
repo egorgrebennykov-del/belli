@@ -1,5 +1,5 @@
 import { WAVIE_HOODIES } from '@/data/hoodies';
-import { fetchPrintifyProducts } from '@/services/printify';
+import { fetchPrintifyProductById, fetchPrintifyProducts } from '@/services/printify';
 
 const SUBDOMAIN = process.env.EXPO_PUBLIC_NHOST_SUBDOMAIN || 'ylllixqgmpirlkpdujwc';
 const REGION = process.env.EXPO_PUBLIC_NHOST_REGION || 'eu-central-1';
@@ -262,6 +262,11 @@ export async function fetchNhostProductById(
 ): Promise<BoutiqueProduct | null> {
   if (id.startsWith('hoodie-')) {
     return WAVIE_HOODIES.find((item) => item.id === id) ?? null;
+  }
+
+  if (id.startsWith('printify-') && process.env.EXPO_OS === 'web') {
+    const p = await fetchPrintifyProductById(id);
+    if (p) return p;
   }
 
   try {

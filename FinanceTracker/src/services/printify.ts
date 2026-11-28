@@ -24,11 +24,24 @@ export async function fetchPrintifyShopStatus(): Promise<PrintifyShopStatus> {
 
 export async function fetchPrintifyProducts(): Promise<BoutiqueProduct[]> {
   try {
-    const res = await fetch('/api/printify/products');
+    const res = await fetch('/api/printify/products', { cache: 'no-store' });
     if (!res.ok) return [];
     const data = (await res.json()) as { products?: BoutiqueProduct[] };
     return data.products ?? [];
   } catch {
     return [];
+  }
+}
+
+export async function fetchPrintifyProductById(id: string): Promise<BoutiqueProduct | null> {
+  try {
+    const res = await fetch(`/api/printify/products?id=${encodeURIComponent(id)}`, {
+      cache: 'no-store',
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as { product?: BoutiqueProduct | null };
+    return data.product ?? null;
+  } catch {
+    return null;
   }
 }
