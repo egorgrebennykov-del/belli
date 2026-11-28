@@ -22,6 +22,7 @@ import {
   createNhostProduct,
   updateNhostProduct,
 } from '@/services/nhost';
+import { createPrintifyProduct } from '@/services/printify';
 import { radius, spacing, typography, useBelliColors } from '@/theme';
 import { validateProductForm } from '@/utils/validation';
 
@@ -61,10 +62,6 @@ export function ProductForm({
 
   const mutation = useMutation({
     mutationFn: async () => {
-      if (!accessToken) {
-        throw new Error('You must be signed in to save changes.');
-      }
-
       const payload = {
         title: title.trim(),
         brand: brand.trim(),
@@ -77,7 +74,26 @@ export function ProductForm({
       };
 
       if (mode === 'create') {
+        if (process.env.EXPO_OS === 'web') {
+          const printifyCreated = await createPrintifyProduct({
+            title: payload.title,
+            description: payload.description,
+            price: payload.price,
+            image: payload.image,
+          });
+          if (accessToken) {
+            await createNhostProduct(accessToken, payload).catch(() => {});
+          }
+          return printifyCreated;
+        }
+        if (!accessToken) {
+          throw new Error('Sign in on Wavie Club to publish hoodies on mobile.');
+        }
         return createNhostProduct(accessToken, payload);
+      }
+
+      if (!accessToken) {
+        throw new Error('You must be signed in to save changes.');
       }
       return updateNhostProduct(accessToken, initialProduct!.id, payload);
     },

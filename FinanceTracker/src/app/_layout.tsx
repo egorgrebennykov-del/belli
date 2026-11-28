@@ -62,13 +62,13 @@ function RootNavigator() {
           name="collection/[slug]"
           options={{ title: 'Collection' }}
         />
+        <Stack.Screen
+          name="product/manage"
+          options={{ title: 'New Hoodie', presentation: 'modal' }}
+        />
         <Stack.Screen name="(auth)" options={{ headerShown: false }} />
 
         <Stack.Protected guard={isAuthenticated}>
-          <Stack.Screen
-            name="product/manage"
-            options={{ title: 'New Piece', presentation: 'modal' }}
-          />
           <Stack.Screen
             name="product/edit/[id]"
             options={{ title: 'Edit Piece', presentation: 'modal' }}

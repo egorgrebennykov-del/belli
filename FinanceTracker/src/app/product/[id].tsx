@@ -9,6 +9,7 @@ import { BelliButton, BelliStateView } from '@/components/belli-ui';
 import { useAuth } from '@/context/auth-context';
 import { useBag } from '@/context/bag-context';
 import { deleteNhostProduct, fetchNhostProductById } from '@/services/nhost';
+import { deletePrintifyProduct } from '@/services/printify';
 import { radius, spacing, typography, useBelliColors } from '@/theme';
 
 const SIZES = ['XS', 'S', 'M', 'L', 'XL'] as const;
@@ -36,6 +37,9 @@ export default function ProductDetailsScreen() {
 
   const deleteMutation = useMutation({
     mutationFn: () => {
+      if (String(id).startsWith('printify-') && process.env.EXPO_OS === 'web') {
+        return deletePrintifyProduct(String(id));
+      }
       if (!accessToken) throw new Error('Authentication required');
       return deleteNhostProduct(accessToken, String(id));
     },
