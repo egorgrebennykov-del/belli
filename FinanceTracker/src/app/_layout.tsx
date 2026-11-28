@@ -12,6 +12,10 @@ import { belliPalette } from '@/theme';
 
 SplashScreen.preventAutoHideAsync();
 
+export const unstable_settings = {
+  initialRouteName: '(tabs)',
+};
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {

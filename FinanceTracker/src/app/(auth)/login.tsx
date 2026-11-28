@@ -121,6 +121,10 @@ export default function LoginScreen() {
             />
 
             <BelliButton title="Sign In to Belli" onPress={handleLogin} loading={submitting} />
+
+            <Link href="/(tabs)" asChild>
+              <BelliButton title="← Browse Boutique as Guest" variant="ghost" onPress={() => {}} />
+            </Link>
           </View>
 
           <View style={{ flexDirection: 'row', justifyContent: 'center', gap: spacing.xs }}>
