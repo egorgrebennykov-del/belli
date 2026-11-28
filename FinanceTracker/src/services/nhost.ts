@@ -1,3 +1,5 @@
+import { XML_CATALOG } from '@/data/xml-catalog';
+
 const SUBDOMAIN = process.env.EXPO_PUBLIC_NHOST_SUBDOMAIN || 'ylllixqgmpirlkpdujwc';
 const REGION = process.env.EXPO_PUBLIC_NHOST_REGION || 'eu-central-1';
 
@@ -197,53 +199,81 @@ const PRODUCT_FIELDS = `
   created_at
 `;
 
+function filterLocalCatalog(category: string, search: string): BoutiqueProduct[] {
+  const q = search.trim().toLowerCase();
+  return XML_CATALOG.filter((item) => {
+    const matchesCat = !category || category === 'All' || item.category === category;
+    const matchesSearch =
+      !q ||
+      item.title.toLowerCase().includes(q) ||
+      item.brand.toLowerCase().includes(q) ||
+      item.category.toLowerCase().includes(q);
+    return matchesCat && matchesSearch;
+  });
+}
+
 export async function fetchNhostProducts(
   accessToken: string | undefined,
   category: string = 'All',
   search: string = ''
 ): Promise<BoutiqueProduct[]> {
-  const where: Record<string, unknown> = {};
-  if (category && category !== 'All') {
-    where.category = { _eq: category };
-  }
-  if (search.trim().length > 0) {
-    where.title = { _ilike: `%${search.trim()}%` };
-  }
-
-  const query = `
-    query GetProducts($where: products_bool_exp) {
-      products(where: $where, order_by: { created_at: desc }) {
-        ${PRODUCT_FIELDS}
-      }
+  try {
+    const where: Record<string, unknown> = {};
+    if (category && category !== 'All') {
+      where.category = { _eq: category };
     }
-  `;
+    if (search.trim().length > 0) {
+      where.title = { _ilike: `%${search.trim()}%` };
+    }
 
-  const data = await graphqlRequest<{ products: BoutiqueProduct[] }>(
-    query,
-    { where },
-    accessToken
-  );
-  return data.products;
+    const query = `
+      query GetProducts($where: products_bool_exp) {
+        products(where: $where, order_by: { created_at: desc }) {
+          ${PRODUCT_FIELDS}
+        }
+      }
+    `;
+
+    const data = await graphqlRequest<{ products: BoutiqueProduct[] }>(
+      query,
+      { where },
+      accessToken
+    );
+    if (data.products.length > 0) {
+      return data.products;
+    }
+    return filterLocalCatalog(category, search);
+  } catch {
+    return filterLocalCatalog(category, search);
+  }
 }
 
 export async function fetchNhostProductById(
   accessToken: string | undefined,
   id: string
 ): Promise<BoutiqueProduct | null> {
-  const query = `
-    query GetProductById($id: uuid!) {
-      products_by_pk(id: $id) {
-        ${PRODUCT_FIELDS}
-      }
-    }
-  `;
+  if (id.startsWith('xml-')) {
+    return XML_CATALOG.find((item) => item.id === id) ?? null;
+  }
 
-  const data = await graphqlRequest<{ products_by_pk: BoutiqueProduct | null }>(
-    query,
-    { id },
-    accessToken
-  );
-  return data.products_by_pk;
+  try {
+    const query = `
+      query GetProductById($id: uuid!) {
+        products_by_pk(id: $id) {
+          ${PRODUCT_FIELDS}
+        }
+      }
+    `;
+
+    const data = await graphqlRequest<{ products_by_pk: BoutiqueProduct | null }>(
+      query,
+      { id },
+      accessToken
+    );
+    return data.products_by_pk ?? XML_CATALOG.find((item) => item.id === id) ?? null;
+  } catch {
+    return XML_CATALOG.find((item) => item.id === id) ?? null;
+  }
 }
 
 export async function createNhostProduct(
