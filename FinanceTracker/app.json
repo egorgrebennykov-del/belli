@@ -1,24 +1,24 @@
 {
   "expo": {
-    "name": "Belli",
-    "slug": "belli",
+    "name": "Wavie",
+    "slug": "wavie",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/belli-logo.png",
-    "scheme": "belli",
-    "userInterfaceStyle": "automatic",
+    "icon": "./assets/images/wavie-logo.png",
+    "scheme": "wavie",
+    "userInterfaceStyle": "dark",
     "ios": {
       "icon": "./assets/expo.icon",
       "infoPlist": {
-        "NSCameraUsageDescription": "Belli uses the camera to photograph boutique items and your profile avatar.",
-        "NSPhotoLibraryUsageDescription": "Belli uses your photo library to upload clothing photos and your profile avatar.",
-        "NSFaceIDUsageDescription": "Belli uses Face ID to quickly unlock your boutique session."
+        "NSCameraUsageDescription": "Wavie uses the camera to photograph hoodies and your profile avatar.",
+        "NSPhotoLibraryUsageDescription": "Wavie uses your photo library to upload hoodie photos and your profile avatar.",
+        "NSFaceIDUsageDescription": "Wavie uses Face ID to protect studio actions."
       }
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#FFF7F9",
-        "foregroundImage": "./assets/images/belli-logo.jpg",
+        "backgroundColor": "#0B0A10",
+        "foregroundImage": "./assets/images/wavie-logo.png",
         "backgroundImage": "./assets/images/android-icon-background.png",
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
@@ -26,7 +26,7 @@
     },
     "web": {
       "output": "server",
-      "favicon": "./assets/images/belli-logo.jpg"
+      "favicon": "./assets/images/wavie-logo.png"
     },
     "plugins": [
       "expo-router",
@@ -34,9 +34,9 @@
       [
         "expo-splash-screen",
         {
-          "backgroundColor": "#FFF7F9",
-          "image": "./assets/images/belli-logo.jpg",
-          "imageWidth": 180
+          "backgroundColor": "#0B0A10",
+          "image": "./assets/images/wavie-logo.png",
+          "imageWidth": 200
         }
       ]
     ],

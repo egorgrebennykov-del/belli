@@ -28,7 +28,7 @@ import { validateProductForm } from '@/utils/validation';
 type EditableCategory = Exclude<(typeof BELLI_CATEGORIES)[number], 'All'>;
 
 const DEFAULT_IMAGE =
-  'https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=80';
+  'https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80';
 
 export function ProductForm({
   mode,
@@ -43,16 +43,16 @@ export function ProductForm({
   const { accessToken } = useAuth();
 
   const [title, setTitle] = useState(initialProduct?.title ?? '');
-  const [brand, setBrand] = useState(initialProduct?.brand ?? 'Belli Atelier');
+  const [brand, setBrand] = useState(initialProduct?.brand ?? 'Wavie Core');
   const [price, setPrice] = useState(
-    initialProduct?.price !== undefined ? String(initialProduct.price) : '145'
+    initialProduct?.price !== undefined ? String(initialProduct.price) : '98'
   );
   const [stock, setStock] = useState(
-    initialProduct?.stock !== undefined ? String(initialProduct.stock) : '10'
+    initialProduct?.stock !== undefined ? String(initialProduct.stock) : '12'
   );
   const [description, setDescription] = useState(initialProduct?.description ?? '');
   const [category, setCategory] = useState<EditableCategory>(
-    initialProduct?.category ?? 'Dresses'
+    initialProduct?.category ?? 'Oversized'
   );
   const [featured, setFeatured] = useState(initialProduct?.featured ?? true);
   const [imageUri, setImageUri] = useState(initialProduct?.image ?? DEFAULT_IMAGE);

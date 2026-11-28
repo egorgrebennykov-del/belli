@@ -60,11 +60,11 @@ export default function BagScreen() {
       {bag.length === 0 ? (
         <BelliStateView
           mode="empty"
-          title={orderPlaced ? 'Thank you for your order ✦' : 'Your Belli bag is empty'}
+          title={orderPlaced ? 'Drop secured ✦' : 'Your Wavie bag is empty'}
           message={
             orderPlaced
-              ? 'Your curated pieces are being prepared at the Belli atelier.'
-              : 'Explore the boutique catalog and select your size to add pieces to your bag.'
+              ? 'Your hoodies are being packed at the Wavie studio.'
+              : 'Explore the hoodie drops and select your size to add pieces to your bag.'
           }
         />
       ) : (

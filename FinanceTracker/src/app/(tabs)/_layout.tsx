@@ -23,7 +23,7 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Boutique',
+          title: 'Hoodies',
           tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>✦</Text>,
         }}
       />
@@ -39,8 +39,8 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Atelier',
-          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>♡</Text>,
+          title: 'Wavie Club',
+          tabBarIcon: ({ color }) => <Text style={{ color, fontSize: 18 }}>★</Text>,
         }}
       />
     </Tabs>

@@ -1,23 +1,23 @@
 import { Platform, TextStyle } from 'react-native';
 
-const serifFamily = Platform.select({
-  ios: 'Georgia',
-  android: 'serif',
-  default: 'Georgia, serif',
+const displayFamily = Platform.select({
+  ios: 'System',
+  android: 'sans-serif',
+  default: 'system-ui, -apple-system, sans-serif',
 });
 
 export const typography = {
   brandTitle: {
-    fontFamily: serifFamily,
+    fontFamily: displayFamily,
     fontSize: 32,
-    fontWeight: '700',
-    letterSpacing: 0.6,
+    fontWeight: '800',
+    letterSpacing: -0.4,
   } satisfies TextStyle,
   screenTitle: {
-    fontFamily: serifFamily,
+    fontFamily: displayFamily,
     fontSize: 24,
-    fontWeight: '700',
-    letterSpacing: 0.2,
+    fontWeight: '800',
+    letterSpacing: -0.3,
   } satisfies TextStyle,
   sectionTitle: {
     fontSize: 18,
@@ -41,13 +41,13 @@ export const typography = {
   } satisfies TextStyle,
   micro: {
     fontSize: 11,
-    fontWeight: '600',
-    letterSpacing: 0.6,
+    fontWeight: '700',
+    letterSpacing: 0.8,
     textTransform: 'uppercase',
   } satisfies TextStyle,
   price: {
     fontSize: 16,
-    fontWeight: '700',
+    fontWeight: '800',
     fontVariant: ['tabular-nums'],
   } satisfies TextStyle,
 } as const;

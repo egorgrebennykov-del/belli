@@ -52,15 +52,15 @@ export default function LoginScreen() {
           keyboardShouldPersistTaps="handled">
           <View style={{ alignItems: 'center', gap: spacing.sm }}>
             <Image
-              source={require('../../../assets/images/belli-logo.png')}
-              style={{ width: '92%', maxWidth: 320, height: 185 }}
+              source={require('../../../assets/images/wavie-logo.png')}
+              style={{ width: '90%', maxWidth: 300, height: 220 }}
               contentFit="contain"
             />
             <Text style={[typography.micro, { color: colors.accent }]}>
-              ✦ CURATED CLOTHING ATELIER ✦
+              ✦ HEAVYWEIGHT HOODIE STORE ✦
             </Text>
             <Text style={[typography.body, { color: colors.textSecondary, textAlign: 'center' }]}>
-              Sign in with your Nhost account to browse and manage Belli pieces.
+              Sign in with your Nhost account to shop drops and manage Wavie hoodies.
             </Text>
           </View>
 
@@ -120,10 +120,10 @@ export default function LoginScreen() {
               error={fieldErrors.password}
             />
 
-            <BelliButton title="Sign In to Belli" onPress={handleLogin} loading={submitting} />
+            <BelliButton title="Sign In to Wavie" onPress={handleLogin} loading={submitting} />
 
             <Link href="/(tabs)" asChild>
-              <BelliButton title="← Browse Boutique as Guest" variant="ghost" onPress={() => {}} />
+              <BelliButton title="← Browse Hoodies as Guest" variant="ghost" onPress={() => {}} />
             </Link>
           </View>
 

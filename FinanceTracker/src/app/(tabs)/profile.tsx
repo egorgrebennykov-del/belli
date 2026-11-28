@@ -46,17 +46,17 @@ export default function ProfileScreen() {
                 alignItems: 'center',
                 justifyContent: 'center',
               }}>
-              <Text style={[typography.brandTitle, { color: colors.accent }]}>B</Text>
+              <Text style={[typography.brandTitle, { color: colors.accent }]}>W</Text>
             </View>
             <Text style={[typography.screenTitle, { color: colors.text }]}>
-              Belli Atelier
+              Wavie Club
             </Text>
             <Text
               style={[
                 typography.body,
                 { color: colors.textSecondary, textAlign: 'center', maxWidth: 290 },
               ]}>
-              Sign in to publish new pieces, edit catalog items, and sync your profile.
+              Sign in to publish new hoodies, edit drop items, and sync your profile.
             </Text>
           </View>
 

@@ -65,10 +65,10 @@ export default function RegisterScreen() {
           }}
           keyboardShouldPersistTaps="handled">
           <View style={{ gap: spacing.xs }}>
-            <Text style={[typography.micro, { color: colors.accent }]}>✦ BELLI MEMBERSHIP</Text>
-            <Text style={[typography.brandTitle, { color: colors.text }]}>Join the Atelier</Text>
+            <Text style={[typography.micro, { color: colors.accent }]}>✦ WAVIE HOODIE CLUB</Text>
+            <Text style={[typography.brandTitle, { color: colors.text }]}>Join Wavie</Text>
             <Text style={[typography.body, { color: colors.textSecondary }]}>
-              Create your personal Belli account via Nhost Auth.
+              Create your Wavie account via Nhost Auth to manage drops.
             </Text>
           </View>
 

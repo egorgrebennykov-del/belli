@@ -58,8 +58,8 @@ export default function BoutiqueScreen() {
             justifyContent: 'space-between',
           }}>
           <Image
-            source={require('../../../assets/images/belli-logo.png')}
-            style={{ width: 150, height: 74 }}
+            source={require('../../../assets/images/wavie-logo.png')}
+            style={{ width: 132, height: 84 }}
             contentFit="contain"
           />
 
@@ -95,7 +95,7 @@ export default function BoutiqueScreen() {
           <TextInput
             value={searchQuery}
             onChangeText={setSearchQuery}
-            placeholder="Search dresses, silk tops, heels..."
+            placeholder="Search oversized, zip-up, fleece hoodies..."
             placeholderTextColor={colors.textMuted}
             returnKeyType="search"
             style={{ flex: 1, color: colors.text, fontSize: 15, paddingVertical: spacing.xs }}

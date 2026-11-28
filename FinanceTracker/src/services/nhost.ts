@@ -1,4 +1,4 @@
-import { XML_CATALOG } from '@/data/xml-catalog';
+import { WAVIE_HOODIES } from '@/data/hoodies';
 
 const SUBDOMAIN = process.env.EXPO_PUBLIC_NHOST_SUBDOMAIN || 'ylllixqgmpirlkpdujwc';
 const REGION = process.env.EXPO_PUBLIC_NHOST_REGION || 'eu-central-1';
@@ -28,7 +28,7 @@ export interface BoutiqueProduct {
   id: string;
   title: string;
   brand: string;
-  category: 'Dresses' | 'Tops' | 'Bottoms' | 'Accessories';
+  category: 'Oversized' | 'Zip-Up' | 'Heavyweight' | 'Cropped' | 'Graphic';
   price: number;
   rating: number;
   stock: number;
@@ -42,10 +42,11 @@ export type ProductInput = Omit<BoutiqueProduct, 'id' | 'rating' | 'created_at'>
 
 export const BELLI_CATEGORIES = [
   'All',
-  'Dresses',
-  'Tops',
-  'Bottoms',
-  'Accessories',
+  'Oversized',
+  'Zip-Up',
+  'Heavyweight',
+  'Cropped',
+  'Graphic',
 ] as const;
 
 async function authRequest<T>(path: string, body: Record<string, unknown>): Promise<T> {
@@ -198,9 +199,9 @@ const PRODUCT_FIELDS = `
   created_at
 `;
 
-function filterLocalCatalog(category: string, search: string): BoutiqueProduct[] {
+function filterLocalHoodies(category: string, search: string): BoutiqueProduct[] {
   const q = search.trim().toLowerCase();
-  return XML_CATALOG.filter((item) => {
+  return WAVIE_HOODIES.filter((item) => {
     const matchesCat = !category || category === 'All' || item.category === category;
     const matchesSearch =
       !q ||
@@ -241,9 +242,9 @@ export async function fetchNhostProducts(
     if (data.products.length > 0) {
       return data.products;
     }
-    return filterLocalCatalog(category, search);
+    return filterLocalHoodies(category, search);
   } catch {
-    return filterLocalCatalog(category, search);
+    return filterLocalHoodies(category, search);
   }
 }
 
@@ -251,8 +252,8 @@ export async function fetchNhostProductById(
   accessToken: string | undefined,
   id: string
 ): Promise<BoutiqueProduct | null> {
-  if (id.startsWith('xml-')) {
-    return XML_CATALOG.find((item) => item.id === id) ?? null;
+  if (id.startsWith('hoodie-')) {
+    return WAVIE_HOODIES.find((item) => item.id === id) ?? null;
   }
 
   try {
@@ -269,9 +270,9 @@ export async function fetchNhostProductById(
       { id },
       accessToken
     );
-    return data.products_by_pk ?? XML_CATALOG.find((item) => item.id === id) ?? null;
+    return data.products_by_pk ?? WAVIE_HOODIES.find((item) => item.id === id) ?? null;
   } catch {
-    return XML_CATALOG.find((item) => item.id === id) ?? null;
+    return WAVIE_HOODIES.find((item) => item.id === id) ?? null;
   }
 }
 

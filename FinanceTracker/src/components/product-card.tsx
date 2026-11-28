@@ -85,7 +85,7 @@ export function ProductCard({
                 paddingHorizontal: spacing.sm,
                 paddingVertical: 3,
               }}>
-              <Text style={[typography.micro, { color: colors.accent }]}>✦ Belli Edit</Text>
+              <Text style={[typography.micro, { color: colors.accent }]}>✦ Wavie Drop</Text>
             </View>
           ) : null}
         </View>
